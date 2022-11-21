@@ -7,7 +7,17 @@ const startGameButton = document.querySelector("#startGame");
 const newCardButton = document.querySelector("#newCard");
 
 const getRandomCard = () => {
-  return 5;
+  let randomNumber = Math.floor(Math.random() * 13) + 1;
+
+  if (randomNumber === 1) {
+    return 11;
+  }
+  else if (randomNumber > 10) {
+    return 10;
+  }
+  else {
+    return randomNumber;
+  }
 }
 
 let firstCard = getRandomCard();
