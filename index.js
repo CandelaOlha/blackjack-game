@@ -1,6 +1,9 @@
-let cardsEl = document.querySelector("#cards");
+let cards = [];
+let cardsEl = document.querySelector("#cardsEl");
+let sum = 0;
 let sumEl = document.querySelector("#sumEl");
 let hasBlackJack = false;
+let isAlive = false;
 let message = "";
 let messageEl = document.querySelector("#messageEl");
 const startGameButton = document.querySelector("#startGame");
@@ -11,19 +14,12 @@ const getRandomCard = () => {
 
   if (randomNumber === 1) {
     return 11;
-  }
-  else if (randomNumber > 10) {
+  } else if (randomNumber > 10) {
     return 10;
-  }
-  else {
+  } else {
     return randomNumber;
   }
-}
-
-let firstCard = getRandomCard();
-let secondCard = getRandomCard();
-let cards = [firstCard, secondCard];
-let sum = firstCard + secondCard;
+};
 
 const renderGame = () => {
   cardsEl.textContent = "Cards: ";
@@ -34,10 +30,15 @@ const renderGame = () => {
 
   if (sum === 21) {
     hasBlackJack = true;
+    isAlive = true;
     message = "Wohoo! You've got Blackjack!";
   } else if (sum > 21) {
+    hasBlackJack = false;
+    isAlive = false;
     message = "You're out of the game!";
   } else {
+    hasBlackJack = false;
+    isAlive = true;
     message = "Do you want to draw a new card?";
   }
 
@@ -46,6 +47,12 @@ const renderGame = () => {
 };
 
 startGameButton.onclick = () => {
+  let firstCard = getRandomCard();
+  let secondCard = getRandomCard();
+
+  cards = [firstCard, secondCard];
+  sum = firstCard + secondCard;
+
   renderGame();
 };
 
@@ -57,5 +64,9 @@ const drawNewCard = () => {
 };
 
 newCardButton.onclick = () => {
-  drawNewCard();
+  if (isAlive && hasBlackJack === false) {
+    drawNewCard();
+  } else {
+    newCardButton.disabled = true;
+  }
 };
