@@ -1,4 +1,4 @@
-# ♣️ Blackjack game
+# ♦️ Blackjack game
 
 ## About this project
 
