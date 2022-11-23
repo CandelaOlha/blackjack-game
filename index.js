@@ -8,18 +8,16 @@ let message = "";
 let messageEl = document.querySelector("#messageEl");
 const startGameButton = document.querySelector("#startGame");
 const newCardButton = document.querySelector("#newCard");
+let playerEl = document.querySelector("#playerEl");
 
-const getRandomCard = () => {
-  let randomNumber = Math.floor(Math.random() * 13) + 1;
+const player = {
+  name: "John Doe",
+  chips: 0,
+}
 
-  if (randomNumber === 1) {
-    return 11;
-  } else if (randomNumber > 10) {
-    return 10;
-  } else {
-    return randomNumber;
-  }
-};
+const displayPlayerChips = () => {
+  playerEl.textContent = `${player.name}: $${player.chips}`;
+}
 
 const renderGame = () => {
   cardsEl.textContent = "Cards: ";
@@ -32,6 +30,9 @@ const renderGame = () => {
     hasBlackJack = true;
     isAlive = true;
     message = "Wohoo! You've got Blackjack!";
+    player.chips += 10;
+    displayPlayerChips();
+    newCardButton.disabled = true;
   } else if (sum > 21) {
     hasBlackJack = false;
     isAlive = false;
@@ -47,7 +48,21 @@ const renderGame = () => {
   sumEl.textContent = `Sum: ${sum}`;
 };
 
+const getRandomCard = () => {
+  let randomNumber = Math.floor(Math.random() * 13) + 1;
+
+  if (randomNumber === 1) {
+    return 11;
+  } else if (randomNumber > 10) {
+    return 10;
+  } else {
+    return randomNumber;
+  }
+};
+
 startGameButton.onclick = () => {
+  newCardButton.disabled = false;
+
   let firstCard = getRandomCard();
   let secondCard = getRandomCard();
 
@@ -69,3 +84,5 @@ const drawNewCard = () => {
 newCardButton.onclick = () => {
   drawNewCard();
 };
+
+displayPlayerChips();
