@@ -36,6 +36,7 @@ const renderGame = () => {
     hasBlackJack = false;
     isAlive = false;
     message = "You're out of the game!";
+    newCardButton.disabled = true;
   } else {
     hasBlackJack = false;
     isAlive = true;
@@ -57,16 +58,14 @@ startGameButton.onclick = () => {
 };
 
 const drawNewCard = () => {
-  let newCard = getRandomCard();
-  sum += newCard;
-  cards.push(newCard);
-  renderGame();
+  if (isAlive && hasBlackJack === false) {
+    let newCard = getRandomCard();
+    sum += newCard;
+    cards.push(newCard);
+    renderGame();
+  }
 };
 
 newCardButton.onclick = () => {
-  if (isAlive && hasBlackJack === false) {
-    drawNewCard();
-  } else {
-    newCardButton.disabled = true;
-  }
+  drawNewCard();
 };
